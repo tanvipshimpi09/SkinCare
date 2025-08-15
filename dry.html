@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dry Skin Routine — Premium Revamp 🍑</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --pink:#ffb6c1;
+    --pink-strong:#ff69b4;
+    --ink:#0f172a;
+    --muted:#475569;
+    --card-bg:rgba(255,255,255,0.55);
+    --card-stroke:rgba(255,255,255,0.6);
+    --glass: blur(12px) saturate(120%);
+    --radius:22px;
+    --shadow:0 8px 30px rgba(15,23,42,.12);
+    --shadow-soft:0 4px 16px rgba(15,23,42,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background: radial-gradient(1200px 600px at 10% -10%, #ffe6f0 0%, transparent 60%),
+                radial-gradient(900px 500px at 110% 10%, #c1e1ff 0%, transparent 60%),
+                linear-gradient(135deg,#fff0f5 0%, #c1e1ff 100%);
+    min-height:100dvh;
+    overflow-x:hidden;
+  }
+
+  /* Subtle ambient blobs (slow, not floaty) */
+  .blob{position:fixed; inset:auto; width:42vmin; aspect-ratio:1; border-radius:50%; filter:blur(30px); opacity:.35; pointer-events:none; z-index:0; mix-blend-mode:multiply}
+  .blob.pink{background:#ffd6e9; left:-8vmin; top:12vmin; animation:drift1 24s ease-in-out infinite}
+  .blob.lilac{background:#d9c6ff; right:-10vmin; top:30vmin; animation:drift2 28s ease-in-out infinite}
+  .blob.peach{background:#ffd9c9; left:40%; bottom:-10vmin; animation:drift3 32s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(10px, -6px)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-8px, 8px)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0)}50%{transform:translate(12px, 4px)}}
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important; transition:none!important}
+  }
+
+  /* Header / Navbar */
+  header{
+    position:sticky; top:0; width:100%; z-index:1000;
+    background: rgba(255, 182, 193, 0.75);
+    backdrop-filter: blur(10px);
+    display:flex; align-items:center; gap:12px;
+    padding:10px 16px; box-shadow: var(--shadow-soft);
+    flex-wrap: wrap; /* allow items to wrap on small screens */
+  }
+  .brand{display:flex; align-items:center; gap:10px}
+  .brand-logo{width:44px; height:44px; border-radius:50%; object-fit:cover; box-shadow:0 4px 12px rgba(0,0,0,.12)}
+  .brand h1{font-family:'Playfair Display',serif; font-weight:700; letter-spacing:.2px; font-size:1.12rem; color:#1b1b1b}
+
+  nav{margin-left:auto; display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+  .nav-btn{appearance:none; border:none; background:rgba(255,255,255,.45); color:#111; font-weight:600; font-size:.95rem; padding:8px 12px; border-radius:999px; box-shadow:var(--shadow-soft); cursor:pointer; transition:transform .2s ease, background .2s ease}
+  .nav-btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.75)}
+
+  /* Mobile responsive header */
+  @media (max-width:768px){
+    header{
+      padding:8px 12px;
+      gap:6px;
+      flex-direction: column; /* stack items vertically */
+      align-items: flex-start;
+    }
+    nav{
+      width:100%;
+      flex-direction: column;
+      gap:6px;
+    }
+    .nav-btn{
+      width:100%;
+      text-align:center;
+      padding:6px 10px;
+      font-size:.9rem;
+    }
+    .brand h1{
+      font-size:1rem;
+    }
+  }
+
+  /* Skin type selector */
+  .skin-select{
+    appearance:none; border:none; margin-left:8px; padding:8px 14px; border-radius:14px; font-weight:600; color:#0b63a3; background:#fff; box-shadow:var(--shadow-soft); cursor:pointer
+  }
+
+  /* Container */
+  .wrap{position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:20px 16px 80px}
+
+  /* Day sections */
+  section.day{min-height:calc(100dvh - 70px); display:none; align-items:flex-start; justify-content:center; flex-direction:column; gap:18px}
+  section.day.active{display:flex}
+
+  .day-title{display:flex; align-items:center; gap:12px}
+  .badge{background:rgba(255,255,255,.55); padding:6px 12px; border-radius:999px; font-weight:700; letter-spacing:.3px; box-shadow:var(--shadow-soft)}
+  h2{font-family:'Playfair Display',serif; font-size:2rem; color:#000}
+  p.lead{color:var(--muted)}
+
+  /* Card grid */
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; width:100%}
+  @media (max-width:960px){.grid{grid-template-columns:1fr}}
+
+  .card{background:var(--card-bg); -webkit-backdrop-filter:var(--glass); backdrop-filter:var(--glass); border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid var(--card-stroke); padding:18px}
+  .card h3{font-size:1.05rem; margin-bottom:8px}
+  .steps{display:flex; flex-direction:column; gap:10px}
+
+  /* Step row */
+  .step{display:grid; grid-template-columns:auto 1fr auto; align-items:start; gap:12px; background:rgba(255,255,255,.4); border:1px solid rgba(255,255,255,.6); border-radius:16px; padding:10px 12px; transition:transform .15s ease}
+  .step:hover{transform:translateY(-1px)}
+  .icon{width:28px; height:28px}
+  .kicker{font-size:.78rem; color:var(--muted)}
+
+  /* Collapsible product tip */
+  details{background:rgba(255,255,255,.55); border:1px dashed rgba(0,0,0,.08); border-radius:12px; padding:10px 12px}
+  details > summary{cursor:pointer; font-weight:600}
+  details ul{margin:8px 0 0 18px}
+  details li{margin:4px 0}
+
+  /* Toolbar under cards */
+  .toolbar{display:flex; gap:10px; flex-wrap:wrap}
+  .btn{appearance:none; border:none; background:linear-gradient(135deg,var(--pink),#ffd2dc); color:#111; font-weight:700; padding:10px 14px; border-radius:14px; box-shadow:var(--shadow-soft); cursor:pointer; transition:transform .2s ease, box-shadow .2s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.ghost{background:rgba(255,255,255,.6)}
+
+  /* Toast */
+  .toast{position:fixed; left:50%; bottom:22px; transform:translateX(-50%) translateY(20px); background:#111; color:#fff; padding:10px 14px; border-radius:12px; opacity:0; pointer-events:none; transition:.28s ease; z-index:1100}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+
+  /* Section transition */
+  .fade-enter{opacity:0; transform:translateY(8px)}
+  .fade-enter-active{opacity:1; transform:translateY(0); transition:.35s ease}
+  .fade-exit{opacity:1; transform:translateY(0)}
+  .fade-exit-active{opacity:0; transform:translateY(-8px); transition:.28s ease}
+
+  /* Tooltip (nicer) */
+  [data-tooltip]{position:relative}
+  [data-tooltip]:hover::after{content:attr(data-tooltip); position:absolute; left:50%; bottom:120%; transform:translateX(-50%); background:#111; color:#fff; padding:6px 10px; border-radius:8px; font-size:.78rem; white-space:nowrap; box-shadow:var(--shadow-soft)}
+
+  /* Per-day accent stripe */
+  .stripe{height:6px; border-radius:999px; margin:-4px 0 8px; background:linear-gradient(90deg,var(--pink),#fecdd3,#c1e1ff)}
+</style>
+
+</head>
+<body>
+  <!-- Ambient blobs -->
+  <div class="blob pink"></div>
+  <div class="blob lilac"></div>
+  <div class="blob peach"></div>
+
+  <header>
+    <div class="brand">
+      <img class="brand-logo" src="logo.png" alt="Logo" />
+      <h1>Glow Planner — Dry</h1>
+    </div>
+    <nav aria-label="Days navigation">
+      <button class="nav-btn" data-target="#monday">Mon</button>
+      <button class="nav-btn" data-target="#tuesday">Tue</button>
+      <button class="nav-btn" data-target="#wednesday">Wed</button>
+      <button class="nav-btn" data-target="#thursday">Thu</button>
+      <button class="nav-btn" data-target="#friday">Fri</button>
+      <button class="nav-btn" data-target="#saturday">Sat</button>
+      <button class="nav-btn" data-target="#sunday">Sun</button>
+    </nav>
+    <select id="skinType" class="skin-select" aria-label="Choose skin type">
+      <option value="oily.html">Oily</option>
+      <option value="dry.html" selected>Dry</option>
+      <option value="combination.html">Combination</option>
+      <option value="sensitive.html">Sensitive</option>
+    </select>
+  </header>
+
+  <main class="wrap">
+
+    <!-- MONDAY -->
+    <section id="monday" class="day active" data-accent="peony">
+      <div class="day-title">
+        <span class="badge">🌞 Monday Cushion</span>
+        <h2>Hydrate & Protect</h2>
+      </div>
+      <div class="stripe" aria-hidden="true"></div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Morning</h3>
+          <div class="steps">
+            <div class="step" data-tooltip="Creamy cleanse that preserves lipids">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg>
+              <div>
+                <div><strong>Cream/Milk Cleanser</strong></div>
+                <div class="kicker">Ceramides • Glycerin</div>
+              </div>
+              <span>🧴</span>
+            </div>
+            <div class="step" data-tooltip="Replenishes moisture & soothes tightness">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20"/><path d="M7 7h10"/></svg>
+              <div>
+                <div><strong>Hydrating Toner/Essence</strong></div>
+                <div class="kicker">HA • Panthenol</div>
+              </div>
+              <span>💧</span>
+            </div>
+            <div class="step" data-tooltip="Humectants + lipids for long wear comfort">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h18"/><circle cx="12" cy="12" r="7"/></svg>
+              <div>
+                <div><strong>Rich Moisturizer</strong></div>
+                <div class="kicker">Ceramide • Squalane</div>
+              </div>
+              <span>🧈</span>
+            </div>
+            <div class="step" data-tooltip="Moisturizing broad-spectrum protection">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.07 6.93-1.41-1.41M6.34 6.34 4.93 4.93m12.73 0-1.41 1.41M6.34 17.66l-1.41 1.41"/></svg>
+              <div>
+                <div><strong>Comfort SPF 30–50</strong></div>
+                <div class="kicker">Dewy • No white cast</div>
+              </div>
+              <span>☀️</span>
+            </div>
+          </div>
+          <details>
+            <summary>Suggestions</summary>
+            <ul>
+              <li>Cleanser: CeraVe Hydrating Cream-to-Foam / LRP Toleriane Dermo-Cleanser</li>
+              <li>Toner: Isntree Hyaluronic Toner / Klairs Supple Prep</li>
+              <li>Moisturizer: Vanicream / COSRX Comfort Ceramide</li>
+              <li>SPF: Beauty of Joseon Relief Sun / LRP Anthelios Melt-in Milk</li>
+            </ul>
+          </details>
+        </article>
+
+        <article class="card">
+          <h3>Night</h3>
+          <div class="steps">
+            <div class="step" data-tooltip="Melts sunscreen & makeup gently">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7z"/></svg>
+              <div><strong>Balm/Oil Cleanser</strong><div class="kicker">Fragrance-free</div></div>
+              <span>🫧</span>
+            </div>
+            <div class="step" data-tooltip="Deep hydration & barrier support">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 3 8 0 12-3-4-3-8 0-12z"/></svg>
+              <div><strong>Hydrating Serum</strong><div class="kicker">HA • Peptides</div></div>
+              <span>🌸</span>
+            </div>
+            <div class="step" data-tooltip="Seal with occlusive comfort cream">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="7"/></svg>
+              <div><strong>Rich Cream</strong><div class="kicker">Ceramide • Shea</div></div>
+              <span>🌙</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Diet</h3>
+          <div class="steps">
+            <div class="step"><span>🥑</span><div><strong>Healthy Fats</strong><div class="kicker">Avocado, olive oil</div></div><span></span></div>
+            <div class="step"><span>🥛</span><div><strong>Omega-3s</strong><div class="kicker">Flax, walnuts</div></div><span></span></div>
+            <div class="step"><span>🍊</span><div><strong>Vitamin C</strong><div class="kicker">Citrus, guava</div></div><span></span></div>
+            <div class="step"><span>🚰</span><div><strong>Electrolyte Water</strong><div class="kicker">Add pinch of salt</div></div><span></span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn" data-copy="#monday">Copy Monday Routine</button>
+        <button class="btn ghost" data-top>Back to Top</button>
+      </div>
+    </section>
+
+    <!-- TUESDAY -->
+<section id="tuesday" class="day" data-accent="peach">
+  <div class="day-title">
+    <span class="badge">🌞 Tuesday Glow</span>
+    <h2>Brighten (Gently)</h2>
+  </div>
+  <div class="stripe" aria-hidden="true"></div>
+
+  <div class="grid">
+    <article class="card">
+      <h3>Morning</h3>
+      <div class="steps">
+        <div class="step" data-tooltip="Ultra-mild cleanse for dry skin">
+          <span>🫧</span>
+          <div><strong>Gentle Cream Cleanser</strong><div class="kicker">Non-foaming</div></div>
+        </div>
+        <div class="step" data-tooltip="Antioxidant boost with hydration">
+          <span>🍊</span>
+          <div><strong>Vitamin C Serum</strong><div class="kicker">+ HA • Ferulic</div></div>
+        </div>
+        <div class="step" data-tooltip="Comforting barrier cream">
+          <span>🧈</span>
+          <div><strong>Ceramide Moisturizer</strong><div class="kicker">Niacinamide 2–5%</div></div>
+        </div>
+        <div class="step" data-tooltip="Hydrating sunscreen, no dryness">
+          <span>☀️</span>
+          <div><strong>Moisturizing SPF 50</strong><div class="kicker">Dewy finish</div></div>
+        </div>
+      </div>
+      <details>
+        <summary>Suggestions</summary>
+        <ul>
+          <li>Cleanser: LRP Toleriane / Avene Extremely Gentle</li>
+          <li>Serum: Geek & Gorgeous C-Glow / Klairs Vitamin Drop</li>
+          <li>Cream: CeraVe Moisturizing Cream / Illiyoon Ceramide Ato</li>
+          <li>SPF: Isntree Hyaluronic Watery Sun / BOJ Relief Sun</li>
+        </ul>
+      </details>
+    </article>
+
+    <article class="card">
+      <h3>Night</h3>
+      <div class="steps">
+        <div class="step"><span>🛁</span><div><strong>Balm Cleanser</strong><div class="kicker">No tugging</div></div></div>
+        <div class="step"><span>✨</span><div><strong>Gentle Exfoliant</strong><div class="kicker">PHA or Lactic ≤5% (1–2×/wk)</div></div></div>
+        <div class="step"><span>🪷</span><div><strong>Sleeping Mask</strong><div class="kicker">Overnight hydration</div></div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>Diet</h3>
+      <div class="steps">
+        <div class="step"><span>🥕</span><div><strong>Beta-Carotene</strong><div class="kicker">Carrot, sweet potato</div></div></div>
+        <div class="step"><span>🥥</span><div><strong>Coconut Water</strong><div class="kicker">Electrolytes</div></div></div>
+        <div class="step"><span>🍯</span><div><strong>Manuka Honey</strong><div class="kicker">Soothe & glow</div></div></div>
+        <div class="step"><span>🧂</span><div><strong>Trace Minerals</strong><div class="kicker">Sprinkle on meals</div></div></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" data-copy="#tuesday">Copy Tuesday Routine</button>
+    <button class="btn ghost" data-top>Back to Top</button>
+  </div>
+</section>
+
+<!-- WEDNESDAY -->
+<section id="wednesday" class="day" data-accent="lavender">
+  <div class="day-title">
+    <span class="badge">🌞 Wednesday Youth</span>
+    <h2>Firm & Smooth</h2>
+  </div>
+  <div class="stripe" aria-hidden="true"></div>
+
+  <div class="grid">
+    <article class="card">
+      <h3>Morning</h3>
+      <div class="steps">
+        <div class="step"><span>🫧</span><div><strong>Hydrating Cleanser</strong><div class="kicker">Non-stripping</div></div></div>
+        <div class="step"><span>🧬</span><div><strong>Peptide Serum</strong><div class="kicker">Firming • Fine lines</div></div></div>
+        <div class="step"><span>💧</span><div><strong>Hyaluronic Acid</strong><div class="kicker">Layer on damp skin</div></div></div>
+        <div class="step"><span>☀️</span><div><strong>SPF 50 (Comfort)</strong><div class="kicker">Moisturizing filters</div></div></div>
+      </div>
+      <details>
+        <summary>Suggestions</summary>
+        <ul>
+          <li>Cleanser: CeraVe Hydrating / Vanicream Gentle</li>
+          <li>Peptides: The Ordinary Buffet / Matrixyl</li>
+          <li>HA: LRP Hyalu B5 / Hada Labo Premium</li>
+          <li>SPF: Eucerin Hyaluron-Filler SPF / BOJ Relief Sun</li>
+        </ul>
+      </details>
+    </article>
+
+    <article class="card">
+      <h3>Night</h3>
+      <div class="steps">
+        <div class="step"><span>🧼</span><div><strong>Cream Cleanser</strong><div class="kicker">Sulfate-free</div></div></div>
+        <div class="step"><span>🌙</span><div><strong>Retinol (Low %)</strong><div class="kicker">In nourishing base 2–3×/wk</div></div></div>
+        <div class="step"><span>🪷</span><div><strong>Rich Night Cream</strong><div class="kicker">Ceramides • Cholesterol</div></div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>Diet</h3>
+      <div class="steps">
+        <div class="step"><span>🐟</span><div><strong>Fatty Fish</strong><div class="kicker">Omega-3 rich</div></div></div>
+        <div class="step"><span>🥦</span><div><strong>Cruciferous</strong><div class="kicker">Broccoli, kale</div></div></div>
+        <div class="step"><span>🍓</span><div><strong>Berries</strong><div class="kicker">Antioxidants</div></div></div>
+        <div class="step"><span>🥛</span><div><strong>Collagen Peptides</strong><div class="kicker">With vitamin C</div></div></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" data-copy="#wednesday">Copy Wednesday Routine</button>
+    <button class="btn ghost" data-top>Back to Top</button>
+  </div>
+</section>
+
+<!-- THURSDAY -->
+<section id="thursday" class="day" data-accent="mint">
+  <div class="day-title">
+    <span class="badge">🌞 Thursday Calm</span>
+    <h2>Nourish & Soothe</h2>
+  </div>
+  <div class="stripe" aria-hidden="true"></div>
+
+  <div class="grid">
+    <article class="card">
+      <h3>Morning</h3>
+      <div class="steps">
+        <div class="step"><span>🫧</span><div><strong>Cream Cleanser</strong><div class="kicker">Barrier-friendly</div></div></div>
+        <div class="step"><span>🌿</span><div><strong>Centella Toner</strong><div class="kicker">Soothe redness</div></div></div>
+        <div class="step"><span>🧪</span><div><strong>Niacinamide 2–5%</strong><div class="kicker">Barrier & tone</div></div></div>
+        <div class="step"><span>☀️</span><div><strong>Moisturizing Sunscreen</strong><div class="kicker">No alcohol</div></div></div>
+      </div>
+      <details>
+        <summary>Suggestions</summary>
+        <ul>
+          <li>Cleanser: Purito Defence Barrier / LRP Toleriane</li>
+          <li>Toner: Benton Green Tea / Skin1004 Centella</li>
+          <li>Niacinamide: Geek & Gorgeous B-Bomb 2%</li>
+          <li>SPF: Isntree Hyaluronic Watery Sun Gel</li>
+        </ul>
+      </details>
+    </article>
+
+    <article class="card">
+      <h3>Night</h3>
+      <div class="steps">
+        <div class="step"><span>🛁</span><div><strong>Oil/Balm Cleanser</strong><div class="kicker">Remove SPF</div></div></div>
+        <div class="step"><span>🧼</span><div><strong>Cream Wash</strong><div class="kicker">Minimal surfactants</div></div></div>
+        <div class="step"><span>🧴</span><div><strong>Panthenol Cream</strong><div class="kicker">Repair barrier</div></div></div>
+        <div class="step"><span>🪄</span><div><strong>Slug (Optional)</strong><div class="kicker">Thin occlusive layer</div></div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>Diet</h3>
+      <div class="steps">
+        <div class="step"><span>🥣</span><div><strong>Oats</strong><div class="kicker">Beta-glucans</div></div></div>
+        <div class="step"><span>🍵</span><div><strong>Chamomile Tea</strong><div class="kicker">Calming</div></div></div>
+        <div class="step"><span>🥬</span><div><strong>Leafy Greens</strong><div class="kicker">Micronutrients</div></div></div>
+        <div class="step"><span>🥥</span><div><strong>MCTs</strong><div class="kicker">Coconut, ghee</div></div></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" data-copy="#thursday">Copy Thursday Routine</button>
+    <button class="btn ghost" data-top>Back to Top</button>
+  </div>
+</section>
+
+<!-- FRIDAY -->
+<section id="friday" class="day" data-accent="sky">
+  <div class="day-title">
+    <span class="badge">🌞 Friday Repair</span>
+    <h2>Repair & Recover</h2>
+  </div>
+  <div class="stripe" aria-hidden="true"></div>
+
+  <div class="grid">
+    <article class="card">
+      <h3>Morning</h3>
+      <div class="steps">
+        <div class="step"><span>🫧</span><div><strong>Gentle Cleanser</strong><div class="kicker">Non-stripping</div></div></div>
+        <div class="step"><span>🌿</span><div><strong>Centella/Allantoin Serum</strong><div class="kicker">Soothe & calm</div></div></div>
+        <div class="step"><span>💧</span><div><strong>Hyaluronic Acid</strong><div class="kicker">Layer then cream</div></div></div>
+        <div class="step"><span>☀️</span><div><strong>SPF 50</strong><div class="kicker">Barrier-safe</div></div></div>
+      </div>
+      <details>
+        <summary>Suggestions</summary>
+        <ul>
+          <li>Cleanser: Purito Defence Barrier</li>
+          <li>Serum: Skin1004 Centella Ampoule</li>
+          <li>HA: Hada Labo Premium</li>
+          <li>SPF: Beauty of Joseon Relief Sun</li>
+        </ul>
+      </details>
+    </article>
+
+    <article class="card">
+      <h3>Night</h3>
+      <div class="steps">
+        <div class="step"><span>🛁</span><div><strong>Oil Cleanser</strong><div class="kicker">Mild emulsifier</div></div></div>
+        <div class="step"><span>🧼</span><div><strong>Creamy Cleanse</strong><div class="kicker">Double cleanse if needed</div></div></div>
+        <div class="step"><span>🌿</span><div><strong>Panthenol/B5 Cream</strong><div class="kicker">Repair barrier</div></div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>Diet</h3>
+      <div class="steps">
+        <div class="step"><span>🥑</span><div><strong>Avocado</strong><div class="kicker">Monounsaturated fats</div></div></div>
+        <div class="step"><span>🥜</span><div><strong>Nuts</strong><div class="kicker">Vitamin E</div></div></div>
+        <div class="step"><span>🍇</span><div><strong>Grapes</strong><div class="kicker">Resveratrol</div></div></div>
+        <div class="step"><span>🥛</span><div><strong>Yogurt/Kefir</strong><div class="kicker">Gut-skin axis</div></div></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" data-copy="#friday">Copy Friday Routine</button>
+    <button class="btn ghost" data-top>Back to Top</button>
+  </div>
+</section>
+
+<!-- SATURDAY -->
+<section id="saturday" class="day" data-accent="blush">
+  <div class="day-title">
+    <span class="badge">🌞 Saturday Pamper</span>
+    <h2>Pamper & Indulge</h2>
+  </div>
+  <div class="stripe" aria-hidden="true"></div>
+
+  <div class="grid">
+    <article class="card">
+      <h3>Morning</h3>
+      <div class="steps">
+        <div class="step"><span>🫧</span><div><strong>Cream Cleanser</strong><div class="kicker">Luxurious feel</div></div></div>
+        <div class="step"><span>💐</span><div><strong>Rose Water Mist</strong><div class="kicker">Refresh & calm</div></div></div>
+        <div class="step"><span>💎</span><div><strong>Brightening Essence</strong><div class="kicker">Pearl/Arbutin (gentle)</div></div></div>
+        <div class="step"><span>☀️</span><div><strong>SPF 50</strong><div class="kicker">Moisturizing</div></div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>Night</h3>
+      <div class="steps">
+        <div class="step"><span>🛁</span><div><strong>Oil Balm</strong><div class="kicker">Spa-like cleanse</div></div></div>
+        <div class="step"><span>🪷</span><div><strong>Sleeping Mask</strong><div class="kicker">Ceramide • HA</div></div></div>
+        <div class="step"><span>🍯</span><div><strong>Honey/Oat Mask</strong><div class="kicker">Nourish & soothe</div></div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>Diet</h3>
+      <div class="steps">
+        <div class="step"><span>🍫</span><div><strong>Dark Chocolate</strong><div class="kicker">Polyphenols</div></div></div>
+        <div class="step"><span>🍓</span><div><strong>Strawberries</strong><div class="kicker">Vitamin C</div></div></div>
+        <div class="step"><span>🥛</span><div><strong>Almond Milk</strong><div class="kicker">Calcium</div></div></div>
+        <div class="step"><span>🍯</span><div><strong>Honey Tea</strong><div class="kicker">Relaxation</div></div></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" data-copy="#saturday">Copy Saturday Routine</button>
+    <button class="btn ghost" data-top>Back to Top</button>
+  </div>
+</section>
+
+<!-- SUNDAY -->
+<section id="sunday" class="day" data-accent="sage">
+  <div class="day-title">
+    <span class="badge">🌿 Sunday Reset</span>
+    <h2>Reset & Replenish</h2>
+  </div>
+  <div class="stripe" aria-hidden="true"></div>
+
+  <div class="grid">
+    <!-- Morning -->
+    <article class="card">
+      <h3>Morning</h3>
+      <div class="steps">
+        <div class="step" data-tooltip="Gently cleanses and comforts">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7z"/></svg>
+          <div>
+            <div><strong>Refreshing Cream Cleanser</strong></div>
+            <div class="kicker">Green tea • Aloe</div>
+          </div>
+          <span>🫧</span>
+        </div>
+        <div class="step" data-tooltip="Very gentle smoothing (optional)">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="7"/><path d="M8 8l8 8M8 16l8-8"/></svg>
+          <div>
+            <div><strong>Exfoliating Toner</strong></div>
+            <div class="kicker">PHA • Lactic ≤3%</div>
+          </div>
+          <span>✨</span>
+        </div>
+        <div class="step" data-tooltip="Antioxidant protection in hydrating base">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M2 12a10 10 0 0 1 20 0"/></svg>
+          <div>
+            <div><strong>Vitamin C Serum</strong></div>
+            <div class="kicker">Ascorbyl Glucoside/AA + HA</div>
+          </div>
+          <span>🍊</span>
+        </div>
+        <div class="step" data-tooltip="Shields and seals hydration">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2m10-10h-2M4 12H2"/></svg>
+          <div>
+            <div><strong>Mineral/Hybrid SPF</strong></div>
+            <div class="kicker">Moisturizing • SPF 50</div>
+          </div>
+          <span>☀️</span>
+        </div>
+      </div>
+      <details>
+        <summary>Suggestions</summary>
+        <ul>
+          <li>Cleanser: Innisfree Green Tea / The Body Shop Aloe</li>
+          <li>Toner: The Ordinary PHA 3% / Krave Kale-Lalu-yAHA (sparingly)</li>
+          <li>Serum: Klairs Freshly Juiced / TruSkin Vitamin C</li>
+          <li>SPF: Thinkbaby Mineral / EltaMD UV Daily</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Night -->
+    <article class="card">
+      <h3>Night</h3>
+      <div class="steps">
+        <div class="step" data-tooltip="Removes impurities & sunscreen">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7z"/></svg>
+          <div><strong>Cream Cleanser</strong><div class="kicker">Sulfate-free</div></div>
+          <span>🧼</span>
+        </div>
+        <div class="step" data-tooltip="Nourishing mask to soften flakes">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M8 8h8v8H8z"/></svg>
+          <div><strong>Honey/Oat Mask</strong><div class="kicker">Kaolin-free</div></div>
+          <span>🍯</span>
+        </div>
+        <div class="step" data-tooltip="Deeply hydrating night cream">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="7"/></svg>
+          <div><strong>Night Cream</strong><div class="kicker">Ceramides • Cholesterol • Squalane</div></div>
+          <span>🌙</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Diet -->
+    <article class="card">
+      <h3>Diet</h3>
+      <div class="steps">
+        <div class="step"><span>🥒</span><div><strong>Cucumber</strong><div class="kicker">Hydrating & cooling</div></div></div>
+        <div class="step"><span>🍵</span><div><strong>Green Tea</strong><div class="kicker">Rich in antioxidants</div></div></div>
+        <div class="step"><span>🍋</span><div><strong>Lemon Water</strong><div class="kicker">Vitamin C boost</div></div></div>
+        <div class="step"><span>🥦</span><div><strong>Cruciferous Veggies</strong><div class="kicker">Broccoli, cauliflower</div></div></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" data-copy="#sunday">Copy Sunday Routine</button>
+    <button class="btn ghost" data-top>Back to Top</button>
+  </div>
+</section>
+
+
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">Copied ✓</div>
+
+<script>
+  // Navigation switching with fade transitions
+  const buttons = document.querySelectorAll('.nav-btn');
+  let active = document.querySelector('section.day.active');
+
+  function showSection(id){
+    const next = document.querySelector(id);
+    if(!next || next===active) return;
+    active.classList.remove('active');
+    active.classList.add('fade-exit-active');
+    setTimeout(()=>{
+      active.classList.remove('fade-exit-active');
+      next.classList.add('fade-enter','active');
+      requestAnimationFrame(()=>{
+        next.classList.add('fade-enter-active');
+        next.classList.remove('fade-enter');
+        setTimeout(()=>next.classList.remove('fade-enter-active'), 350);
+        active = next;
+        window.history.replaceState({}, '', id);
+      });
+    }, 200);
+  }
+
+  buttons.forEach(b=>b.addEventListener('click', e=>{
+    e.preventDefault();
+    showSection(b.dataset.target);
+  }));
+
+  // Deep link support on load
+  window.addEventListener('DOMContentLoaded', () => {
+    const hash = location.hash || '#monday';
+    if (hash) showSection(hash);
+  });
+
+  // Skin type navigation
+  document.getElementById('skinType').addEventListener('change', function(){
+    location.href = this.value;
+  });
+
+  // Copy routine helper
+  function collectRoutineText(section){
+    const title = section.querySelector('.day-title h2')?.textContent?.trim() || '';
+    const blocks = [...section.querySelectorAll('.card')].map(card=>{
+      const head = card.querySelector('h3')?.textContent?.trim();
+      const steps = [...card.querySelectorAll('.step')].map(s=>s.innerText.replace(/\s+/g,' ').trim());
+      return `**${head}**\n- ` + steps.join('\n- ');
+    });
+    return `${title}\n\n` + blocks.join('\n\n');
+  }
+
+  const toast = document.getElementById('toast');
+  function showToast(message='Copied ✓'){
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'), 1500);
+  }
+
+  document.querySelectorAll('[data-copy]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const sel = btn.getAttribute('data-copy');
+      const sec = document.querySelector(sel);
+      if(!sec) return;
+      const text = collectRoutineText(sec);
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast('Routine copied ✨');
+      }catch(err){
+        console.error(err);
+        showToast('Copy failed');
+      }
+    });
+  });
+
+  // Back to top
+  document.querySelectorAll('[data-top]').forEach(b=>b.addEventListener('click',()=>window.scrollTo({top:0, behavior:'smooth'})));
+</script>
+</body>
+</html>
