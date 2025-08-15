@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: white;
+    background: #000;
+    overflow-x: hidden;
+}
+
+/* Netflix Intro */
+.intro-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #ff6ec4, #7873f5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+    text-align: center;
+}
+
+.intro-line {
+    animation: fadeIn 1.5s ease forwards;
+    opacity: 0;
+}
+.intro-line:nth-child(1) { animation-delay: 0.5s; }
+.intro-line:nth-child(2) { animation-delay: 2s; }
+
+.skin-options {
+    margin-top: 20px;
+}
+.skin-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 20px;
+    background: white;
+    color: black;
+    margin: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Curtain Animation */
+.curtain {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: black;
+    z-index: 5000;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.8s ease;
+}
+.curtain.active {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+.curtain.reverse {
+    transform-origin: right;
+}
+
+/* Planner Content */
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.5);
+}
+.day {
+    padding: 50px;
+    text-align: center;
+    font-size: 24px;
+}
+
+/* Skin Type Gradients */
+.oily {
+    background: linear-gradient(135deg, #ff6ec4, #7873f5);
+}
+.dry {
+    background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+}
+.combination {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+}
